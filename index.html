@@ -253,9 +253,9 @@
     const gamesList = [
         "1v1.LOL", "2048", "2048 Cupcakes", "A Dark Room", "Abobo's Big Adventure", 
         "AdVenture Capitalist", "Agar.io", "Age of War", "Alien Hominid", "Among Us Online", 
-        "Bad Ice Cream", "Baldi's Basics", "Basket Random", "Basketball Stars", "BitLife", "Bitcoin Clicker",
+        "Bad Ice Cream", "Baldi's Basics", "Basket Random", "Basket Bros", "BitLife", "Bitcoin Clicker",
         "Bloons Tower Defense 5", "Boxhead 2Play", "Boxing Random", "Burrito Bison", "Candy Box 2", 
-        "Celeste Classic", "Chrome Dino Game", "Clicker Heroes", "Cookie Clicker", "Crossy Road", 
+        "Celeste Classic", "Chrome Dino", "Clicker Heroes", "Cookie Clicker", "Crossy Road", 
         "Cut the Rope", "Diep.io", "Doodle Jump", "Drift Boss", "Duck Life", 
         "Earn to Die", "Electric Man 2", "Fancy Pants Adventure", "Fireboy and Watergirl in the Forest Temple", 
         "Five Nights at Freddy's (Web)", "Flappy Bird", "Friday Night Funkin'", "Gartic Phone", 
@@ -267,7 +267,7 @@
         "Papa's Pizzeria", "Paper.io 2", "Plants vs. Zombies", "QWOP", "Raft Wars", 
         "Retro Bowl", "Rooftop Snipers", "Run 3", "Shell Shockers", "Short Life", 
         "Skribbl.io", "Slither.io", "Slope", "Smash Karts", "Snake.io", 
-        "Snow Rider 3D", "Soccer Physics", "Spelunky (HTML5)", "Stick War: Legacy", "Stickman Hook", 
+        "Snow Rider 3D", "Soccer Random", "Spelunky (HTML5)", "Stick War: Legacy", "Stickman Hook", 
         "Subway Surfers", "Super Mario 63", "Super Smash Flash 2", "Surviv.io", "Temple Run 2", 
         "Tetris", "The Impossible Quiz", "Time Shooter 2", "Tunnel Rush", "Universal Paperclips", 
         "Vex 3", "Vex 4", "Vex 5", "Volley Random", "Wings.io", 
@@ -312,9 +312,27 @@ if (name === "Slope") {
       if (name === "Retro Bowl") {
     gameUrl = "https://retrobowl2026.github.io/";
 }
-   if (name === "Hexanaut.io") {
+   if (name === "Hexanaut.io snake") {
     gameUrl = "https://hexanaut.io/";
 }   
+      if (name === "Basket Bros") {
+    gameUrl = "https://basketbros.io/";
+}
+if (name === "BitLife") {
+    gameUrl = "https://bitlifeonline.io/";
+}
+if (name === "Paper.io 2") {
+    gameUrl = "https://paper-io.com/";
+}
+if (name === "Soccer Random") {
+    gameUrl = "https://soccer-randomx.github.io/";
+}
+if (name === "Moto X3M") {
+    gameUrl = "https://motox3munblocked.github.io";
+}
+if (name === "Chrome Dino") {
+    gameUrl = "https://elgoog.im/t-rex/";
+}
         return {
             name: name,
             // Using a dynamic placeholder image service for thumbnails
@@ -423,6 +441,7 @@ window.openGame = function(url, title) {
 </script>
 </body>
 </html>
+
 
 
 
