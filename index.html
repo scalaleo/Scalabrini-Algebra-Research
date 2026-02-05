@@ -288,7 +288,9 @@
         if (name === "Cookie Clicker") {
             gameUrl = "https://g8hh.github.io/cookieclicker/";
         }
-        { name: "Wordle", url: "https://wordleunlimited.org" }
+      if (name === "Wordle") {
+    gameUrl = "https://wordleunlimited.org";
+}
 
         return {
             name: name,
@@ -398,6 +400,7 @@ window.openGame = function(url, title) {
 </script>
 </body>
 </html>
+
 
 
 
