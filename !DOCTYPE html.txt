@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalabrini Games</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-hover: #5649c0;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Header & Search */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: 2px solid #333;
+            background-color: #252525;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.3);
+        }
+
+        /* Grid Layout */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Game Card Styling */
+        .game-card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border-color: var(--primary);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 150px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .card-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .btn-play {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-play:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-classroom {
+            background-color: #333;
+            color: var(--text-muted);
+        }
+
+        .btn-classroom:hover {
+            background-color: #444;
+            color: white;
+        }
+
+        /* Modal / Fullscreen Overlay */
+        #gameModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        #modalToolbar {
+            height: 40px;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        #gameFrame {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #ff4757;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Scalabrini Games</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for a game...">
+    </div>
+</header>
+
+<div class="container">
+    <div class="game-grid" id="gameGrid">
+        </div>
+</div>
+
+<div id="gameModal">
+    <div id="modalToolbar">
+        <span style="color:white; font-weight:bold;" id="modalTitle">Game Title</span>
+        <button class="close-btn" onclick="closeGame()">&times;</button>
+    </div>
+    <iframe id="gameFrame" src="" allowfullscreen></iframe>
+</div>
+
+<script>
+    // 1. THE MASTER GAME LIST
+    const gamesList = [
+        "1v1.LOL", "2048", "2048 Cupcakes", "A Dark Room", "Abobo's Big Adventure", 
+        "AdVenture Capitalist", "Agar.io", "Age of War", "Alien Hominid", "Among Us Online", 
+        "Bad Ice Cream", "Baldi's Basics", "Basket Random", "Basketball Stars", "BitLife", 
+        "Bloons Tower Defense 5", "Boxhead 2Play", "Boxing Random", "Burrito Bison", "Candy Box 2", 
+        "Celeste Classic", "Chrome Dino Game", "Clicker Heroes", "Cookie Clicker", "Crossy Road", 
+        "Cut the Rope", "Diep.io", "Doodle Jump", "Drift Boss", "Duck Life", 
+        "Earn to Die", "Electric Man 2", "Fancy Pants Adventure", "Fireboy and Watergirl in the Forest Temple", 
+        "Five Nights at Freddy's (Web)", "Flappy Bird", "Friday Night Funkin'", "Gartic Phone", 
+        "GeoGuessr", "Geometry Dash", "Getaway Shootout", "Google Feud", "Granny", 
+        "Hanger", "Happy Wheels", "Henry Stickmin: Escaping the Prison", "Henry Stickmin: Stealing the Diamond", 
+        "Hole.io", "House of Hazards", "Iron Snout", "JustFall.LOL", "Kingdom Rush", 
+        "Krunker.io", "Learn to Fly", "Line Rider", "Little Alchemy", "Minecraft Classic", 
+        "Mope.io", "Moto X3M", "N Game", "Pac-Man", "Papa's Freezeria", 
+        "Papa's Pizzeria", "Paper.io 2", "Plants vs. Zombies", "QWOP", "Raft Wars", 
+        "Retro Bowl", "Rooftop Snipers", "Run 3", "Shell Shockers", "Short Life", 
+        "Skribbl.io", "Slither.io", "Slope", "Smash Karts", "Snake.io", 
+        "Snow Rider 3D", "Soccer Physics", "Spelunky (HTML5)", "Stick War: Legacy", "Stickman Hook", 
+        "Subway Surfers", "Super Mario 63", "Super Smash Flash 2", "Surviv.io", "Temple Run 2", 
+        "Tetris", "The Impossible Quiz", "Time Shooter 2", "Tunnel Rush", "Universal Paperclips", 
+        "Vex 3", "Vex 4", "Vex 5", "Volley Random", "Wings.io", 
+        "Wordle", "World's Hardest Game", "Zombs Royale"
+    ];
+
+    // Alphabetize the list strictly
+    gamesList.sort();
+
+    // 2. Generate Game Objects
+    const games = gamesList.map(name => {
+        
+        // DEFAULT URL (Placeholder)
+        let gameUrl = `https://example.com/embed/${name.replace(/\s+/g, '-').toLowerCase()}`;
+        
+        // --- CUSTOM URL OVERRIDES ---
+        // This is where we insert the real link for Cookie Clicker
+        if (name === "Cookie Clicker") {
+            gameUrl = "https://orteil.dashnet.org/cookieclicker/";
+        }
+
+        return {
+            name: name,
+            // Using a dynamic placeholder image service for thumbnails
+            thumbnail: `https://placehold.co/600x400/252525/FFF?text=${encodeURIComponent(name)}`,
+            url: gameUrl
+        };
+    });
+
+    const grid = document.getElementById('gameGrid');
+    const searchInput = document.getElementById('searchInput');
+    const modal = document.getElementById('gameModal');
+    const modalFrame = document.getElementById('gameFrame');
+    const modalTitle = document.getElementById('modalTitle');
+
+    // 3. Render Games
+    function renderGames(filterText = '') {
+        grid.innerHTML = ''; // Clear current grid
+        
+        const filtered = games.filter(game => 
+            game.name.toLowerCase().includes(filterText.toLowerCase())
+        );
+
+        filtered.forEach(game => {
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            
+            card.innerHTML = `
+                <div class="card-img">
+                    <img src="${game.thumbnail}" alt="${game.name}" loading="lazy">
+                </div>
+                <div class="card-info">
+                    <div class="card-title">${game.name}</div>
+                    <div class="card-actions">
+                        <button class="btn btn-play" onclick="openGame('${game.url}', '${game.name}')">Play Now</button>
+                        <button class="btn btn-classroom" onclick="openClassroomMode('${game.url}')">Classroom Mode</button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // 4. Play Game (In-site Modal)
+    window.openGame = function(url, title) {
+        modalTitle.innerText = title;
+        modalFrame.src = url;
+        modal.style.display = 'flex';
+        // Request fullscreen for the modal container
+        if (modal.requestFullscreen) {
+            modal.requestFullscreen();
+        }
+    };
+
+    // 5. Close Game
+    window.closeGame = function() {
+        modal.style.display = 'none';
+        modalFrame.src = ''; // Stop game execution
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    };
+
+    // 6. Classroom Mode (About:Blank)
+    window.openClassroomMode = function(url) {
+        const win = window.open('about:blank', '_blank');
+        if (win) {
+            win.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Classroom Mode</title>
+                    <style>
+                        body { margin: 0; padding: 0; background-color: #000; overflow: hidden; height: 100vh; }
+                        iframe { width: 100%; height: 100%; border: none; }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="${url}" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+                </body>
+                </html>
+            `);
+            win.document.close();
+        } else {
+            alert("Pop-up blocked! Please allow pop-ups for Scalabrini Games.");
+        }
+    };
+
+    // 7. Search Listener
+    searchInput.addEventListener('input', (e) => {
+        renderGames(e.target.value);
+    });
+
+    // Initial Render
+    renderGames();
+
+</script>
+</body>
+</html>
