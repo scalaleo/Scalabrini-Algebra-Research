@@ -32,4 +32,4 @@ This website is designed to be accessed directly via the hosted link.
 
 ## ⚠️ Disclaimer
 
-This website is for educational and personal use only. All game content remains the intellectual property of their original creators.
+This website is for educational and personal use only. All game content remains the intellectual property of their original creators. v1
