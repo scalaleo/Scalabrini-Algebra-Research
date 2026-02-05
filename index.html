@@ -253,7 +253,7 @@
     const gamesList = [
         "1v1.LOL", "2048", "2048 Cupcakes", "A Dark Room", "Abobo's Big Adventure", 
         "AdVenture Capitalist", "Agar.io", "Age of War", "Alien Hominid", "Among Us Online", 
-        "Bad Ice Cream", "Baldi's Basics", "Basket Random", "Basketball Stars", "BitLife", 
+        "Bad Ice Cream", "Baldi's Basics", "Basket Random", "Basketball Stars", "BitLife", "Bitcoin Clicker",
         "Bloons Tower Defense 5", "Boxhead 2Play", "Boxing Random", "Burrito Bison", "Candy Box 2", 
         "Celeste Classic", "Chrome Dino Game", "Clicker Heroes", "Cookie Clicker", "Crossy Road", 
         "Cut the Rope", "Diep.io", "Doodle Jump", "Drift Boss", "Duck Life", 
@@ -291,7 +291,9 @@
       if (name === "Wordle") {
     gameUrl = "https://wordleunlimited.org";
 }
-
+if (name === "Bitcoin Clicker") {
+    gameUrl = "https://www.mortgagecalculator.org/money-games/bitcoin-millionaire/";
+}
         return {
             name: name,
             // Using a dynamic placeholder image service for thumbnails
@@ -400,6 +402,7 @@ window.openGame = function(url, title) {
 </script>
 </body>
 </html>
+
 
 
 
