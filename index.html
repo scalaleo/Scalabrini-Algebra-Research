@@ -286,7 +286,7 @@
         // --- CUSTOM URL OVERRIDES ---
         // This is where we insert the real link for Cookie Clicker
         if (name === "Cookie Clicker") {
-            gameUrl = "https://g8hh.github.io/cookieclicker/";
+            gameUrl = "https://pisaucer.github.io/boredhtml/games/cookieclicker/";
         }
 
         return {
@@ -334,8 +334,8 @@
     // 4. Play Game (In-site Modal)
 window.openGame = function(url, title) {
     modalTitle.innerText = title;
-
-    // This version uses a simpler, more aggressive hijack
+    
+    // This 'shell' is designed to intercept the Oops script before it runs
     const shell = `
         <!DOCTYPE html>
         <html>
@@ -344,14 +344,12 @@ window.openGame = function(url, title) {
             </head>
             <body>
                 <script>
-                    // Brute force bypass
+                    // THE BYPASS: Forces the game to think it is the top window
                     window.top = window.self;
                     window.parent = window.self;
                     
-                    // This stops the 'Oops' script from running before the game starts
-                    document.addEventListener('DOMContentLoaded', () => {
-                        window.top = window.self;
-                    });
+                    // Add an extra check for more aggressive security scripts
+                    Object.defineProperty(window, 'top', { get: function() { return window.self; } });
                 <\/script>
                 <iframe src="${url}" style="width:100%; height:100%; border:none;" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
             </body>
@@ -406,6 +404,7 @@ window.openGame = function(url, title) {
 </script>
 </body>
 </html>
+
 
 
 
